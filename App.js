@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{useState,useEffect} from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import Constants from 'expo-constants'
 import {Item} from './components/Item'
 
@@ -8,6 +8,10 @@ import {Item} from './components/Item'
 
 
 export default function App() {
+
+
+  const[data, setData] = useState()
+
   const AppData =[
     { id: "1", name: "Apple"},
     { id: "2", name: "Orange"},
@@ -17,12 +21,19 @@ export default function App() {
   ]
 
 
+
+
   const Renderer =({item}) => (<Item text = {item.name}/>)
 
   return (
     <View style={styles.container}>
-      <Text>Hello there! This is a first app!</Text>
-      <FlatList data ={AppData} keyExtractor={(item =>item.id)} renderItem={Renderer}/>
+      <View style={styles.header}>
+        <TextInput style={styles.input}/>
+        <TouchableOpacity style = {styles.button}>
+          <Text style={styles.buttonText}>Add to list</Text>
+          </TouchableOpacity>
+      </View>
+      <FlatList data ={data} keyExtractor={(item =>item.id)} renderItem={Renderer}/>
     </View>
   );
 }
@@ -30,7 +41,31 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'lightyellow',
     marginTop: Constants.statusBarHeight,
   },
+
+  header:{
+    display: 'flex',
+    flexDirection: 'row',
+  },
+
+  input:{
+    backgroundColor: '#FFFFFF',
+    fontSize: 30,
+    borderColor: 'black',
+    borderWidth: 1,
+    padding: 5,
+    flex: 1,
+  },
+  
+  button:{
+    backgroundColor: 'lightgrey',
+    
+  },
+
+  buttonText:{
+    color: 'navy',
+    padding:10,
+  }
 });
