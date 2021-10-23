@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{useState,useEffect} from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants'
 import {Item} from './components/Item'
 
@@ -13,6 +14,21 @@ export default function App() {
   const[data, setData] = useState([])
   const[validInput,setValidInput]= useState(false)
   const[input,setInput] = useState()
+  const[appInt,setAppInt] =useState(true)
+  
+  
+  useEffect( ()=>{
+    if(appInt){
+      getData()
+      setAppInt(false)
+      console.log('getting data...')
+    }
+    else{
+      storeData()
+      console.log('storing data...')
+    }
+    storeData()
+  },[data])
 
   
 
@@ -34,6 +50,8 @@ export default function App() {
     const item ={id: id, name:input}
     setData([...data,item])
     setInput(null)
+    setValidInput(false)
+    
 
   }
 
@@ -45,8 +63,31 @@ export default function App() {
       }
     })
     setData(newData)
+    
   }
 
+  const storeData = async () =>{
+    const stringified = JSON.stringify( data )
+    try {
+
+      await AsyncStorage.setItem("listData",stringified) 
+
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
+
+  const getData = async()=>{
+    try {
+      const stringified = await AsyncStorage.getItem("listData")
+      setData( (stringified !== null) ? JSON.parse(stringified) : [])
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+ 
   const Renderer =({item}) => (<Item text = {item.name} delete={onDelete} id={item.id}/>)
 
   return (
