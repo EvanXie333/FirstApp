@@ -1,11 +1,15 @@
 import React  from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet,Button} from 'react-native';
 
 
 export const Item =(props)=>{
+    const deleteItem =(id) => {
+        props.delete(id)
+    }
     return(
       <View style={style.container}>
-        <Text>{props.text}</Text>
+        <Text style={style.text}>{props.text}</Text>
+        <Button title="Delete" onPress={ ()=>deleteItem(props.id)}/>
         </View>
     )
   }
@@ -16,5 +20,11 @@ export const Item =(props)=>{
           backgroundColor: 'lightblue',
           borderBottomColor: 'black',
           borderBottomWidth:1,
+          display:"flex",
+          flexDirection:"row",
+          alignItems:"center",
+      },
+      text:{
+          flex:1,
       },
   })
