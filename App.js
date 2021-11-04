@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{useState,useEffect} from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput, Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants'
 import {Item} from './components/Item'
@@ -21,13 +21,13 @@ export default function App() {
     if(appInt){
       getData()
       setAppInt(false)
-      console.log('getting data...')
+      // console.log('getting data...')
     }
     else{
       storeData()
-      console.log('storing data...')
+      // console.log('storing data...')
     }
-    storeData()
+    
   },[data])
 
   
@@ -86,6 +86,7 @@ export default function App() {
       console.log(error)
     }
   }
+  
 
  
   const Renderer =({item}) => (<Item text = {item.name} delete={onDelete} id={item.id}/>)
@@ -115,7 +116,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'lightyellow',
+    backgroundColor: 'grey',
     marginTop: Constants.statusBarHeight,
   },
 
