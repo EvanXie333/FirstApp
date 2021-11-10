@@ -1,20 +1,18 @@
-import React  from 'react';
-import {View, Text, StyleSheet,Button} from 'react-native';
+import React from "react"
+import { View, Text, StyleSheet, Button } from "react-native"
+export const Item =(props) =>{
 
-
-export const Item =(props)=>{
-    const deleteItem =(id) => {
-        props.delete(id)
-    }
+    
     return(
-      <View style={style.container}>
-        <Text style={style.text}>{props.text}</Text>
-        <Button title="Delete" onPress={ ()=>deleteItem(props.id)}/>
+        <View style={styles.container}>
+            <Text style={(props.status) ? styles.textDone : styles.text}>{props.text}</Text>
+            <Button title="delete" onPress={ ()=> props.delete(props.id)}/>
+            <Button title="done" onPress ={ ()=> props.done(props.id)}/>
         </View>
     )
-  }
+}
 
-  const style = StyleSheet.create({
+  const styles = StyleSheet.create({
       container: {
           padding:10,
           backgroundColor: 'lightblue',
@@ -26,5 +24,11 @@ export const Item =(props)=>{
       },
       text:{
           flex:1,
+          color:"black",
       },
+      textDone:{
+          flex:1,
+          textDecorationLine:"line-through",
+          color:"gray",
+      }
   })
